@@ -62,15 +62,14 @@ RUN printf "[binaries]\nllvm-config = '/opt/llvm/9.0.0/bin/llvm-config'" > confi
 RUN meson $MESA_BUILD_DIR \
 	--native-file=config.ini \
 	--buildtype=release \
-	-Dglx=disabled \
+	-Dglx=gallium-xlib \
 	-Dvulkan-drivers= \
 	-Ddri-drivers= \
 	-Dgallium-drivers=swrast,swr \
-	-Dplatforms=surfaceless \
+	-Dplatforms=x11 \
 	-Dgallium-omx=disabled \
 	-Dosmesa=gallium \
-	-Dprefix=$MESA_BUILD_DIR \
-	-Degl=true
+	-Dprefix=$MESA_BUILD_DIR 
 RUN ninja -C $MESA_BUILD_DIR  && \
 	meson install -C $MESA_BUILD_DIR
 ENV LD_LIBRARY_PATH=/opt/mesa/lib:$LD_LIBRARY_PATH
